@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fetch API</title>
+</head>
+<body>
+
+<script type="text/javascript">
+	
+	var url = 'https://next.json-generator.com/api/json/get/VkHtyTYK_';
+	fetch(url)
+	.then(function(response)
+	{
+		return response.json();
+	})
+	.then(function(myJson)
+	{
+		console.log(JSON.stringify(myJson));
+	})
+
+</script>
+</body>
+</html>
