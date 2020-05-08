@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Fetcher With Fetch</title>
+</head>
+<style>
+    #image
+    {
+        width:400px;
+        height: auto;
+    }
+</style>
+<body>
+    <button id="myButton">Load New Image</button>
+
+    <div id="app">
+        <img src="" id="image">
+    </div>
+
+    <script>
+        const imageElm = document.getElementById("image");
+        const myButtonElm = document.getElementById("myButton");
+
+        myButtonElm.addEventListener('click',function (evt){
+            evt.preventDefault();
+            fetchRandomImage();
+        });
+
+        function fetchRandomImage()
+        {
+            var imgRandom = getRandomArbitrary(1,9);
+            console.log(imgRandom);
+            const myRequest = new Request("http://jstut.com/img/"+imgRandom+".jpg");
+
+            fetch(myRequest)
+            .then(response => response.blob())
+            .then(blob => {
+                imageElm.src = URL.createObjectURL(blob);
+            });
+        }
+
+        function getRandomArbitrary(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+    </script>
+</body>
+</html>
