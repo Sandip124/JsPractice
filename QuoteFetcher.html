@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Fetcher</title>
+    <style>
+        .activeBtn
+        {
+            background-color: rgb(30, 210, 75);
+            color: cornsilk;
+            border: none;
+            padding: 10px;
+        }
+
+        .disabledBtn
+        {
+            background-color: chocolate;
+            color: cornsilk;
+            border:none;
+            padding: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <button id="reload" class="activeBtn">Get new Quote</button>
+        <img src="" id="image">
+    </div>
+
+
+
+    <script>
+        const imageElm = document.getElementById("image");
+        const reloadButton = document.getElementById("reload");
+
+        reloadButton.addEventListener('click',function(evt){
+            evt.preventDefault();
+            reloadButton.innerHTML= "Fetching Quote...";
+            reloadButton.setAttribute("readonly",false);
+            reloadButton.classList.add('activeBtn');
+            reloadButton.classList.remove('disabledBtn');
+            fetchQuote();
+
+            setTimeout(function(){ 
+                reloadButton.innerHTML= "Get new Quote";
+                reloadButton.setAttribute("readonly",true);
+                reloadButton.classList.add('disabledBtn');
+                reloadButton.classList.remove('activeBtn');
+             }, 3000);
+           
+        });
+
+        function fetchQuote()
+        {
+            var imgRandom = getRandomArbitrary(99,9999);
+            console.log(imgRandom);
+            const myRequest = new Request("https://www.quotes.net/images/"+imgRandom+".png");
+
+            fetch(myRequest)
+            .then(response => response.blob())
+            .then(blob => {
+                imageElm.src = URL.createObjectURL(blob);
+            });
+        }
+
+        function getRandomArbitrary(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+    </script>
+</body>
+</html>
