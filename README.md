@@ -5,3 +5,6 @@ Code Source:
 https://devdocs.io
 
 DevDocs is free and open source. It was created by Thibaut Courouble and is operated by freeCodeCamp.
+
+Add image loader using js fetch();
+Add Quote Fetcher
