@@ -6,28 +6,50 @@
     <title>File Upload Using Fetch API</title>
 </head>
 <body>
-    <form action="upload.php" method="post" id="myForm" enctype="multipart/form-data" onsubmit="postForm()">
+    <form action="" id="myForm" >
         <input type="file" name="photo" id="photo">
-        <input type="submit">
+        <input type="submit" id="submitBtn">
     </form>
-
+    <div id="output">
+        <!-- output here -->
+    </div>
     <script>
-        function postForm()
-        {
+
+const url = "./upload.php";
+document.addEventListener('DOMContentLoaded',init);
+
+function init()
+{
+    document.getElementById("submitBtn").addEventListener('click',postForm);
+}
+
+        function postForm(evt){
+            evt.preventDefault();
+            
+            let customHeader = new Headers();
+            customHeader.append("Accept","application/json");
+
             var formData = new FormData();
-            var fileField = document.querySelector("input[type='file']");
+            var fileField = document.getElementById("photo");
 
             formData.append('username',"sandip124");
             formData.append('avatar',fileField.files[0]);
 
-            var url ="./upload.php";
-            fetch(url,{
-                method : "PUT",
+            let request = new Request(url,{
+                method : 'POST',
+                headers : customHeader,
+                mode : "no-cors",
                 body : formData
+            });
+
+            fetch(request)
+            .then(response => 
+            {
+                let output = document.getElementById("output");
+                output.textContent = "Response Received from Server";
+                console.log(JSON.stringify(response));
             })
-            .then(response => response.json())
             .catch(error => console.log("Error:", error))
-            .then(response => console.log("Success:",JSON.stringify(response)));
         }
     </script>
 </body>
